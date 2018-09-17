@@ -31,6 +31,10 @@ DATABASE = {
     'database': 'dw-guia-bh'
 }
 
+#Configuracao Pipeline
+ITEM_PIPELINES = {'scrapingGuiaBH.pipelines.ScrapingguiabhPipeline': 300,}
+
+
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
