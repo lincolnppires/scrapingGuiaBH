@@ -21,6 +21,17 @@ NEWSPIDER_MODULE = 'scrapingGuiaBH.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
+#Configuração banco de dados local
+DATABASE = {
+    'drivername': 'postgres',
+    'host': 'localhost',
+    'port': '5432',
+    'username': 'postgres',
+    'password': 'postgres',
+    'database': 'dw-guia-bh'
+}
+
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
