@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,0" last-zoom="1"
+	 default-schema="public" default-owner="postgres">
+<database name="new_database">
+</database>
+
+<schema name="public" protected="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="d_evento">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Dimensao para identificar o evento]]></comment>
+	<position x="680" y="60"/>
+	<column name="id_d_evento" not-null="true">
+		<type name="serial"/>
+		<comment><![CDATA[Surrogate Key para identificar o evento]]></comment>
+	</column>
+	<column name="descricao" not-null="true">
+		<type name="varchar"/>
+		<comment><![CDATA[Descricao do evento]]></comment>
+	</column>
+	<constraint name="pk_d_evento" type="pk-constr" table="public.d_evento">
+		<columns names="id_d_evento" ref-type="src-columns"/>
+		<comment><![CDATA[Identificacao do evento]]></comment>
+	</constraint>
+</table>
+
+<table name="d_local_evento">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Dimensao local do evento]]></comment>
+	<position x="1260" y="260"/>
+	<column name="id_d_local_evento" not-null="true">
+		<type name="serial"/>
+		<comment><![CDATA[Surrogate key para identificar o local do evento]]></comment>
+	</column>
+	<column name="endereco" not-null="true">
+		<type name="varchar"/>
+	</column>
+	<constraint name="pk_d_local_evento" type="pk-constr" table="public.d_local_evento">
+		<columns names="id_d_local_evento" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="d_local_venda">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Dimensao local de venda do ingresso]]></comment>
+	<position x="1140" y="460"/>
+	<column name="id_d_local_venda" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="local" not-null="true">
+		<type name="varchar"/>
+	</column>
+	<constraint name="pk_d_lcoal_venda" type="pk-constr" table="public.d_local_venda">
+		<columns names="id_d_local_venda" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="d_tipo_ingresso">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Dimensao tipo do ingresso]]></comment>
+	<position x="520" y="580"/>
+	<column name="id_d_tipo_ingresso" not-null="true">
+		<type name="serial"/>
+		<comment><![CDATA[Surrogate key para identificar o valor do ingresso]]></comment>
+	</column>
+	<column name="descricao" not-null="true">
+		<type name="varchar"/>
+		<comment><![CDATA[Diferentes tipos de ingresso(vip, geral, etc)]]></comment>
+	</column>
+	<constraint name="pk_valor_ingresso" type="pk-constr" table="public.d_tipo_ingresso">
+		<columns names="id_d_tipo_ingresso" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="d_categoria_evento">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Dimensao para as categorias do evento]]></comment>
+	<position x="100" y="60"/>
+	<column name="id_d_categoria_evento" not-null="true">
+		<type name="serial"/>
+		<comment><![CDATA[Surrogate Key para categoria do evento]]></comment>
+	</column>
+	<column name="descricao" not-null="true">
+		<type name="varchar"/>
+	</column>
+	<constraint name="pk_categoria_evento" type="pk-constr" table="public.d_categoria_evento">
+		<columns names="id_d_categoria_evento" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="d_tempo">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Dimensao tempo]]></comment>
+	<position x="20" y="340"/>
+	<column name="id_d_tempo" not-null="true">
+		<type name="serial"/>
+		<comment><![CDATA[Surrogate key dimensao tempo]]></comment>
+	</column>
+	<column name="data" not-null="true">
+		<type name="date"/>
+	</column>
+	<column name="dia" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="mes" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="ano" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<constraint name="id_d_tempo" type="pk-constr" table="public.d_tempo">
+		<columns names="id_d_tempo" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="f_valor_ingresso">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<comment><![CDATA[Tabela fato - valor ]]></comment>
+	<position x="520" y="280"/>
+	<column name="valor_ingresso" not-null="true">
+		<type name="smallint"/>
+	</column>
+
+	<customidxs object-type="column">
+		<object name="id_d_categoria_evento_d_categoria_evento" index="2"/>
+		<object name="id_d_evento_d_evento" index="0"/>
+		<object name="id_d_local_evento_d_local_evento" index="5"/>
+		<object name="id_d_local_venda_d_local_venda" index="1"/>
+		<object name="id_d_tempo_d_tempo" index="3"/>
+		<object name="id_d_tipo_ingresso_d_tipo_ingresso" index="4"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="d_categoria_evento_fk" index="3"/>
+		<object name="d_evento_fk" index="0"/>
+		<object name="d_local_evento_fk" index="1"/>
+		<object name="d_local_venda_fk" index="2"/>
+		<object name="d_tempo_fk" index="4"/>
+		<object name="d_tipo_ingresso_fk" index="5"/>
+	</customidxs>
+</table>
+
+<relationship name="d_evento_has_many_f_valor_ingresso" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#551dd6"
+	 src-table="public.d_evento"
+	 dst-table="public.f_valor_ingresso"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="d_local_evento_has_many_f_valor_ingresso" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#38545b"
+	 src-table="public.d_local_evento"
+	 dst-table="public.f_valor_ingresso"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="d_local_venda_has_many_f_valor_ingresso" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#0f8995"
+	 src-table="public.d_local_venda"
+	 dst-table="public.f_valor_ingresso"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="d_categoria_evento_has_many_f_valor_ingresso" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#fd0222"
+	 src-table="public.d_categoria_evento"
+	 dst-table="public.f_valor_ingresso"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="d_tempo_has_many_f_valor_ingresso" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#f1c191"
+	 src-table="public.d_tempo"
+	 dst-table="public.f_valor_ingresso"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="d_tipo_ingresso_has_many_f_valor_ingresso" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#5262a0"
+	 src-table="public.d_tipo_ingresso"
+	 dst-table="public.f_valor_ingresso"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
